@@ -70,13 +70,10 @@ namespace Unity.BossRoom.ConnectionManagement
             {
                 m_ConnectionMethod.SetupHostConnection();
 
-                if (m_ConnectionMethod is ConnectionMethodIP)
+                // NGO's StartHost launches everything
+                if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
-                    // NGO's StartHost launches everything
-                    if (!m_ConnectionManager.NetworkManager.StartHost())
-                    {
-                        StartHostFailed();
-                    }
+                    StartHostFailed();
                 }
             }
             catch (Exception)
