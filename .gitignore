@@ -1,14 +1,24 @@
 ```
-# Unity-specific ignores
+# Build artifacts and compiled files
+*.dll
+*.exe
+*.pdb
+*.unitypackage
 Library/
 Temp/
 Obj/
-Build/
-Logs/
-*.unityproj
-*.sln
-*.user
+
+# Dependencies
+Packages/
+node_modules/
+
+# User-specific settings
+.vs/
+.vsync/
 *.userprefs
+*.suo
+*.user
+*.userosscache
 *.pidb
 *.booproj
 *.svd
