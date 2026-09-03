@@ -63,27 +63,27 @@ namespace Unity.BossRoom.ConnectionManagement
             // Wait 1 frame to ensure scene context is ready
             yield return null; 
             
-            var charSelectState = m_ConnectionManager.CurrentState as ServerCharSelectState;
+            // Find the ServerCharSelectState in the loaded scene
+            var charSelectState = FindObjectOfType<ServerCharSelectState>();
             if (charSelectState != null)
             {
                 Debug.Log("[StartingHostState] Manually seating host player.");
                 charSelectState.SeatHostPlayer();
+                yield break;
             }
-            else
+            
+            // Try again in case state hasn't updated yet
+            yield return new WaitForSeconds(0.5f);
+            
+            charSelectState = FindObjectOfType<ServerCharSelectState>();
+            if (charSelectState != null)
             {
-                // Try again in case state hasn't updated yet
-                yield return new WaitForSeconds(0.5f);
-                charSelectState = m_ConnectionManager.CurrentState as ServerCharSelectState;
-                if (charSelectState != null)
-                {
-                    Debug.Log("[StartingHostState] Manually seating host player (delayed).");
-                    charSelectState.SeatHostPlayer();
-                }
-                else
-                {
-                    Debug.LogWarning("[StartingHostState] Could not find ServerCharSelectState to seat host. State: " + (m_ConnectionManager.CurrentState?.GetType().Name ?? "null"));
-                }
+                Debug.Log("[StartingHostState] Manually seating host player (delayed).");
+                charSelectState.SeatHostPlayer();
+                yield break;
             }
+            
+            Debug.LogWarning("[StartingHostState] Could not find ServerCharSelectState to seat host.");
         }
 
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
