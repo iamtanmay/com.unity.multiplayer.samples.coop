@@ -95,6 +95,8 @@ namespace Unity.BossRoom.Gameplay.UI
         /// </summary>
         public void QuickStartHostIPRequest(string ip, string port)
         {
+            Debug.Log($"[IPUIMediator] QuickStartHostIPRequest called with IP: {ip}, Port: {port}");
+            
             int.TryParse(port, out var portNum);
             if (portNum <= 0)
             {
@@ -106,9 +108,11 @@ namespace Unity.BossRoom.Gameplay.UI
             m_SignInSpinner.SetActive(true);
             
             // Set the AllowLocalMultiplayerStart flag to true for quick start
+            Debug.Log("[IPUIMediator] Setting AllowLocalMultiplayerStart = true");
             m_ConnectionManager.AllowLocalMultiplayerStart = true;
             
             // Start host as normal
+            Debug.Log($"[IPUIMediator] Calling m_ConnectionManager.StartHostIp with player: {m_PlayerNameLabel.text}, IP: {ip}, Port: {portNum}");
             m_ConnectionManager.StartHostIp(m_PlayerNameLabel.text, ip, portNum);
         }
 

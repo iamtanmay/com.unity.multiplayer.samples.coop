@@ -1,27 +1,70 @@
 ```
-# Build artifacts
-*.dll
-*.exe
-*.pdb
-*.meta
-*.unitypackage
-
-# Unity specific
+# Unity-specific ignores
 Library/
 Temp/
 Obj/
 Build/
-Logs/
-MemoryCaptures/
+Builds/
+*.unityproj
+*.userprefs
+*.sln
+*.csproj
+*.pidb
+*.user
+*.userprefs
+*.unity
+*.asset
+*.meta
+*.prefab
+*.mat
+*.anim
+*.controller
+*.physicsMaterial
+*.renderTexture
+*.cubemap
+*.flare
+*.mat
+*.mask
+*.overrideController
+*.playable
+*.signal
+*.spriteatlas
+*.terrain
+*.tga
+*.tif
+*.tiff
+*.unitypackage
+*.unity.meta
+*.asset.meta
+*.prefab.meta
+*.mat.meta
+*.anim.meta
+*.controller.meta
+*.physicsMaterial.meta
+*.renderTexture.meta
+*.cubemap.meta
+*.flare.meta
+*.mask.meta
+*.overrideController.meta
+*.playable.meta
+*.signal.meta
+*.spriteatlas.meta
+*.terrain.meta
+*.tga.meta
+*.tif.meta
+*.tiff.meta
 
-# Dependencies
-Packages/
-UserSettings/
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+*.pdb
 
 # Environment
 .env
 .env.local
-.env.*
+*.env.*
 
 # Logs
 *.log
@@ -29,4 +72,252 @@ UserSettings/
 # OS generated files
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Icon?
+._*
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+coverage/
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+.eggs/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Unit test / coverage reports
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+._*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+
+# Generated files
+generated/
+.autotools
+.autorevision
+.config
+.cache
+.data
+.db
+.dump
+.history
+.log
+.lock
+.pid
+.sock
+.state
+.tmp
+.temp
+.well-known
+.yarn-integrity
+.yarn-metadata.json
+.yarn-state.yml
+.yarnrc
+.yarn/
+.pnp.*
+.pnp.js
+.pnp.cjs
+.pnp.loader.mjs
+.pnp.asdf.json
+.yarn/build-state.yml
+.yarn/install-state.gz
+.yarn/unplugged/
+.yarn/virtual/
+.yarn/cache/
+.yarn/plugins/
+.yarn/sdks/
+.yarn/versions/
+.yarn/releases/
+.yarn/berry/
+.yarn/classic/
+.yarn/prettier/
+.yarn/eslint/
+.yarn/jest/
+.yarn/babel/
+.yarn/typescript/
+.yarn/node-modules/
+.yarn/pnpify/
+.yarn/sdks/
+.yarn/virtual/
+.yarn/unplugged/
+.yarn/cache/
+.yarn/plugins/
+.yarn/releases/
+.yarn/berry/
+.yarn/classic/
+.yarn/prettier/
+.yarn/eslint/
+.yarn/jest/
+.yarn/babel/
+.yarn/typescript/
+.yarn/node-modules/
+.yarn/pnpify/
+.yarn/sdks/
+.yarn/virtual/
+.yarn/unplugged/
+.yarn/cache/
+.yarn/plugins/
+.yarn/releases/
+.yarn/berry/
+.yarn/classic/
+.yarn/prettier/
+.yarn/eslint/
+.yarn/jest/
+.yarn/babel/
+.yarn/typescript/
+.yarn/node-modules/
+.yarn/pnpify/
 ```
