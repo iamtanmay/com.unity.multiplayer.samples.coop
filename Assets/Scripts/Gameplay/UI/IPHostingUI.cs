@@ -16,6 +16,9 @@ namespace Unity.BossRoom.Gameplay.UI
         [SerializeField]
         Button m_HostButton;
 
+        [SerializeField]
+        Button m_QuickStartButton;
+
         [Inject] IPUIMediator m_IPUIMediator;
 
         void Awake()
@@ -39,6 +42,29 @@ namespace Unity.BossRoom.Gameplay.UI
         public void OnCreateClick()
         {
             m_IPUIMediator.HostIPRequest(m_IPInputField.text, m_PortInputField.text);
+        }
+
+        /// <summary>
+        /// Quick Start button - hosts and immediately starts the game without waiting for character selection
+        /// </summary>
+        public void OnQuickStartClick()
+        {
+            Debug.Log("[IPHostingUI] OnQuickStartClick called!");
+            
+            // Set default IP and port if empty
+            string ip = string.IsNullOrEmpty(m_IPInputField.text) ? IPUIMediator.k_DefaultIP : m_IPInputField.text;
+            string port = m_PortInputField.text;
+            
+            Debug.Log($"[IPHostingUI] Quick Start with IP: {ip}, Port: {port}");
+            
+            if (m_IPUIMediator == null)
+            {
+                Debug.LogError("[IPHostingUI] m_IPUIMediator is null!");
+                return;
+            }
+            
+            Debug.Log("[IPHostingUI] Calling m_IPUIMediator.QuickStartHostIPRequest");
+            m_IPUIMediator.QuickStartHostIPRequest(ip, port);
         }
 
         /// <summary>

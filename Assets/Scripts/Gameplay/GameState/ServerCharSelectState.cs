@@ -134,6 +134,49 @@ namespace Unity.BossRoom.Gameplay.GameState
         /// </summary>
         void CloseSessionIfReady()
         {
+            // For local multiplayer / single-instance games: allow starting without waiting for all players
+            bool isLocalMultiplayerMode = m_ConnectionManager.AllowLocalMultiplayerStart;
+            
+            Debug.Log($"[ServerCharSelect] CloseSessionIfReady called. LocalMultiplayerMode={isLocalMultiplayerMode}, Players.Count={networkCharSelection.sessionPlayers.Count}");
+            
+            // If in local multiplayer mode, only require that at least one player is locked in
+            if (isLocalMultiplayerMode)
+            {
+                // Check if we have at least one player who has locked in
+                bool hasAtLeastOneLockedIn = false;
+                int lockedInCount = 0;
+                foreach (NetworkCharSelection.SessionPlayerState playerInfo in networkCharSelection.sessionPlayers)
+                {
+                    Debug.Log($"[ServerCharSelect] Player {playerInfo.PlayerName} (ClientID={playerInfo.ClientId}) SeatState={playerInfo.SeatState}");
+                    if (playerInfo.SeatState == NetworkCharSelection.SeatState.LockedIn)
+                    {
+                        hasAtLeastOneLockedIn = true;
+                        lockedInCount++;
+                    }
+                }
+                
+                Debug.Log($"[ServerCharSelect] LockedInCount={lockedInCount}, HasAtLeastOne={hasAtLeastOneLockedIn}");
+                
+                if (hasAtLeastOneLockedIn)
+                {
+                    // In local mode, start the game when at least one player is ready
+                    Debug.Log("[ServerCharSelect] Local multiplayer mode: At least one player locked in. Starting game!");
+                    networkCharSelection.IsSessionClosed.Value = true;
+                    
+                    // remember our choices so the next scene can use the info
+                    SaveSessionResults();
+                    
+                    // Delay a few seconds to give the UI time to react, then switch scenes
+                    m_WaitToEndSessionCoroutine = StartCoroutine(WaitToEndSession());
+                }
+                else
+                {
+                    Debug.Log("[ServerCharSelect] Waiting for at least one player to lock in their character...");
+                }
+                return;
+            }
+            
+            // Original behavior for networked multiplayer: wait for ALL players to lock in
             foreach (NetworkCharSelection.SessionPlayerState playerInfo in networkCharSelection.sessionPlayers)
             {
                 if (playerInfo.SeatState != NetworkCharSelection.SeatState.LockedIn)
@@ -209,6 +252,35 @@ namespace Unity.BossRoom.Gameplay.GameState
                 networkCharSelection.OnClientChangedSeat += OnClientChangedSeat;
 
                 NetworkManager.Singleton.SceneManager.OnSceneEvent += OnSceneEvent;
+                
+                // Auto-seat the host player immediately since they don't trigger OnSceneEvent
+                SeatHostPlayer();
+            }
+        }
+
+        /// <summary>
+        /// Automatically seats the host player when the character select state starts.
+        /// This is needed because the host doesn't trigger the normal OnSceneEvent flow.
+        /// </summary>
+        void SeatHostPlayer()
+        {
+            ulong hostClientId = NetworkManager.Singleton.LocalClientId;
+            
+            // Check if host is already seated
+            bool hostIsSeated = false;
+            foreach (NetworkCharSelection.SessionPlayerState playerState in networkCharSelection.sessionPlayers)
+            {
+                if (playerState.ClientId == hostClientId)
+                {
+                    hostIsSeated = true;
+                    break;
+                }
+            }
+            
+            if (!hostIsSeated)
+            {
+                Debug.Log($"[ServerCharSelect] Auto-seating host player (ClientId={hostClientId})");
+                SeatNewPlayer(hostClientId);
             }
         }
 
