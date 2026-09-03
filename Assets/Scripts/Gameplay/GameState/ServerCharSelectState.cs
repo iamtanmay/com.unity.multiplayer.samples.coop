@@ -136,10 +136,9 @@ namespace Unity.BossRoom.Gameplay.GameState
         {
             // For local multiplayer / single-instance games: allow starting without waiting for all players
             bool isLocalMultiplayerMode = m_ConnectionManager.AllowLocalMultiplayerStart;
-            bool isLocalOnly = m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count <= 1;
             
-            // If in local multiplayer mode, only require that active players are locked in
-            if (isLocalMultiplayerMode && isLocalOnly)
+            // If in local multiplayer mode, only require that at least one player is locked in
+            if (isLocalMultiplayerMode)
             {
                 // Check if we have at least one player who has locked in
                 bool hasAtLeastOneLockedIn = false;

@@ -1,50 +1,22 @@
 ```
-# Build artifacts and compiled files
-*.dll
-*.exe
-*.pdb
-*.unitypackage
-Library/
-Temp/
-Obj/
-
-# Dependencies
-Packages/
-node_modules/
-
-# User-specific settings
-.vs/
-.vsync/
-*.userprefs
-*.suo
-*.user
-*.userosscache
-*.pidb
-*.booproj
-*.svd
-*.cache
-*.meta
-*.prefab
-*.asset
-*.mat
-*.anim
-*.controller
-*.physicMaterial
-*.physicsMaterial2D
-*.flare
-*.cubemap
-*.prefs
-*.spriteatlas
-*.asmdef
-*.rsp
-*.asmref
-
 # Build artifacts
 *.dll
 *.exe
 *.pdb
-*.mdb
-*.exe.config
+*.meta
+*.unitypackage
+
+# Unity specific
+Library/
+Temp/
+Obj/
+Build/
+Logs/
+MemoryCaptures/
+
+# Dependencies
+Packages/
+UserSettings/
 
 # Environment
 .env
@@ -56,16 +28,5 @@ node_modules/
 
 # OS generated files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-desktop.ini
-
-# Editor backups
-*.bak
-*~
-.#*
 ```
