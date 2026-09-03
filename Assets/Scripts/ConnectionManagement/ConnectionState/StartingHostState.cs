@@ -1,5 +1,4 @@
 using System;
-using Unity.BossRoom.Gameplay.GameState;
 using Unity.BossRoom.Infrastructure;
 using Unity.BossRoom.UnityServices.Sessions;
 using Unity.Multiplayer.Samples.BossRoom;
