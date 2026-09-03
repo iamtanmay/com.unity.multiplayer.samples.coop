@@ -1,59 +1,14 @@
 ```
-# Build artifacts and binaries
-*.dll
-*.exe
-*.pdb
-*.so
-*.dylib
-*.class
-*.o
-*.obj
-*.out
-
-# Unity/Mono specific
+# Unity specific ignores
+*.meta
 Library/
 Temp/
 Obj/
 Build/
 Builds/
 *.unitypackage
-*.pidb
 *.userprefs
-*.sln
-*.csproj
-*.user
-*.userosscache
-*.booproj
-
-# Dependencies
-Packages/
-node_modules/
-.unity3d/
-
-# Logs
-*.log
-crashlytics-build.properties
-
-# Environment
-.env
-.env.local
-.env.*
-!.env.example
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-desktop.ini
-
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+.sln
+.csproj
+.asmdef
 ```
