@@ -56,6 +56,7 @@ namespace Unity.BossRoom.ConnectionManagement
     public class ConnectionManager : MonoBehaviour
     {
         ConnectionState m_CurrentState;
+        public ConnectionState CurrentState => m_CurrentState;
 
         [Inject]
         NetworkManager m_NetworkManager;

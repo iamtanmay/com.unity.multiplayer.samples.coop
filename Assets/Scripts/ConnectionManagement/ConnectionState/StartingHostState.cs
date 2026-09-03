@@ -1,4 +1,5 @@
 using System;
+using Unity.BossRoom.Gameplay.GameState;
 using Unity.BossRoom.Infrastructure;
 using Unity.BossRoom.UnityServices.Sessions;
 using Unity.Multiplayer.Samples.BossRoom;
@@ -46,8 +47,8 @@ namespace Unity.BossRoom.ConnectionManagement
             var networkManager = m_ConnectionManager.NetworkManager;
             if (networkManager != null)
             {
-                Debug.Log("[StartingHostState] Loading CharacterSelect scene for host...");
-                networkManager.SceneManager.LoadScene("CharacterSelect", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                Debug.Log("[StartingHostState] Loading CharSelect scene for host...");
+                networkManager.SceneManager.LoadScene("CharSelect", UnityEngine.SceneManagement.LoadSceneMode.Single);
                 
                 // 2. Seat the host player immediately so they can select a character
                 // We delay this slightly to ensure the scene has started loading
