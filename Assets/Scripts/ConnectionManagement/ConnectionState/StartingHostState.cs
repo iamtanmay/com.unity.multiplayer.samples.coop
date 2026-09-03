@@ -35,8 +35,54 @@ namespace Unity.BossRoom.ConnectionManagement
 
         public override void OnServerStarted()
         {
+            Debug.Log("[StartingHostState] Server started. Transitioning to Lobby/CharSelect logic.");
+            
+            // CRITICAL FIX FOR SINGLE PLAYER HOST:
+            // The server must load the scene and seat itself, as it won't receive the "ClientLoadedScene" callback.
+            
             m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
+            
+            // 1. Load the Character Select scene for the server immediately
+            var networkManager = m_ConnectionManager.NetworkManager;
+            if (networkManager != null)
+            {
+                Debug.Log("[StartingHostState] Loading CharacterSelect scene for host...");
+                networkManager.SceneManager.LoadScene("CharacterSelect", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                
+                // 2. Seat the host player immediately so they can select a character
+                // We delay this slightly to ensure the scene has started loading
+                m_ConnectionManager.StartCoroutine(SeatHostAfterDelay());
+            }
+            
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
+        }
+
+        private System.Collections.IEnumerator SeatHostAfterDelay()
+        {
+            // Wait 1 frame to ensure scene context is ready
+            yield return null; 
+            
+            var charSelectState = m_ConnectionManager.CurrentState as ServerCharSelectState;
+            if (charSelectState != null)
+            {
+                Debug.Log("[StartingHostState] Manually seating host player.");
+                charSelectState.SeatHostPlayer();
+            }
+            else
+            {
+                // Try again in case state hasn't updated yet
+                yield return new WaitForSeconds(0.5f);
+                charSelectState = m_ConnectionManager.CurrentState as ServerCharSelectState;
+                if (charSelectState != null)
+                {
+                    Debug.Log("[StartingHostState] Manually seating host player (delayed).");
+                    charSelectState.SeatHostPlayer();
+                }
+                else
+                {
+                    Debug.LogWarning("[StartingHostState] Could not find ServerCharSelectState to seat host. State: " + (m_ConnectionManager.CurrentState?.GetType().Name ?? "null"));
+                }
+            }
         }
 
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
