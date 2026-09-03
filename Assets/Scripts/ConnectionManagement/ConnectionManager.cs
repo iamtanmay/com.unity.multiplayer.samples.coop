@@ -69,7 +69,11 @@ namespace Unity.BossRoom.ConnectionManagement
         [Inject]
         IObjectResolver m_Resolver;
 
+        [Tooltip("Maximum number of players allowed in a session. For local co-op on same keyboard, set to 2 or more.")]
         public int MaxConnectedPlayers = 8;
+        
+        [Tooltip("When true, allows hosting without waiting for other players (local multiplayer mode)")]
+        public bool AllowLocalMultiplayerStart = true;
 
         internal readonly OfflineState m_Offline = new OfflineState();
         internal readonly ClientConnectingState m_ClientConnecting = new ClientConnectingState();

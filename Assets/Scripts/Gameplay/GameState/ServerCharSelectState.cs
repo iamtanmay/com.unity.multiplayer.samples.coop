@@ -134,6 +134,39 @@ namespace Unity.BossRoom.Gameplay.GameState
         /// </summary>
         void CloseSessionIfReady()
         {
+            // For local multiplayer / single-instance games: allow starting without waiting for all players
+            bool isLocalMultiplayerMode = m_ConnectionManager.AllowLocalMultiplayerStart;
+            bool isLocalOnly = m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count <= 1;
+            
+            // If in local multiplayer mode, only require that active players are locked in
+            if (isLocalMultiplayerMode && isLocalOnly)
+            {
+                // Check if we have at least one player who has locked in
+                bool hasAtLeastOneLockedIn = false;
+                foreach (NetworkCharSelection.SessionPlayerState playerInfo in networkCharSelection.sessionPlayers)
+                {
+                    if (playerInfo.SeatState == NetworkCharSelection.SeatState.LockedIn)
+                    {
+                        hasAtLeastOneLockedIn = true;
+                        break;
+                    }
+                }
+                
+                if (hasAtLeastOneLockedIn)
+                {
+                    // In local mode, start the game when at least one player is ready
+                    networkCharSelection.IsSessionClosed.Value = true;
+                    
+                    // remember our choices so the next scene can use the info
+                    SaveSessionResults();
+                    
+                    // Delay a few seconds to give the UI time to react, then switch scenes
+                    m_WaitToEndSessionCoroutine = StartCoroutine(WaitToEndSession());
+                }
+                return;
+            }
+            
+            // Original behavior for networked multiplayer: wait for ALL players to lock in
             foreach (NetworkCharSelection.SessionPlayerState playerInfo in networkCharSelection.sessionPlayers)
             {
                 if (playerInfo.SeatState != NetworkCharSelection.SeatState.LockedIn)

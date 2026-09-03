@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.BossRoom.Gameplay.Actions;
 using Unity.BossRoom.Gameplay.Configuration;
 using Unity.BossRoom.Gameplay.GameplayObjects;
 using Unity.BossRoom.Gameplay.GameplayObjects.Character;
@@ -239,21 +240,21 @@ namespace Unity.BossRoom.Gameplay.UserInput
 
         void OnSkill1Started(InputAction.CallbackContext context)
         {
-            if (!IsActive || m_ServerCharacter == null) return;
-            RequestAction(CharacterClass.Skill1.ActionID, ClientInputSender.SkillTriggerStyle.Keyboard);
+            if (!IsActive || m_ServerCharacter == null || m_ServerCharacter.CharacterClass == null) return;
+            RequestAction(m_ServerCharacter.CharacterClass.Skill1.ActionID, ClientInputSender.SkillTriggerStyle.Keyboard);
         }
 
         void OnSkill1Canceled(InputAction.CallbackContext context)
         {
-            if (!IsActive || m_ServerCharacter == null) return;
-            RequestAction(CharacterClass.Skill1.ActionID, ClientInputSender.SkillTriggerStyle.KeyboardRelease);
+            if (!IsActive || m_ServerCharacter == null || m_ServerCharacter.CharacterClass == null) return;
+            RequestAction(m_ServerCharacter.CharacterClass.Skill1.ActionID, ClientInputSender.SkillTriggerStyle.KeyboardRelease);
         }
 
         void OnSkill2Started(InputAction.CallbackContext context)
         {
-            if (!IsActive || m_ServerCharacter == null) return;
+            if (!IsActive || m_ServerCharacter == null || m_ServerCharacter.CharacterClass == null) return;
             
-            if (GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill2.ActionID, out var skill2))
+            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.CharacterClass.Skill2.ActionID, out var skill2))
             {
                 RequestAction(skill2.ActionID, ClientInputSender.SkillTriggerStyle.Keyboard);
             }
@@ -261,9 +262,9 @@ namespace Unity.BossRoom.Gameplay.UserInput
 
         void OnSkill2Canceled(InputAction.CallbackContext context)
         {
-            if (!IsActive || m_ServerCharacter == null) return;
+            if (!IsActive || m_ServerCharacter == null || m_ServerCharacter.CharacterClass == null) return;
             
-            if (GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill2.ActionID, out var skill2))
+            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.CharacterClass.Skill2.ActionID, out var skill2))
             {
                 RequestAction(skill2.ActionID, ClientInputSender.SkillTriggerStyle.KeyboardRelease);
             }
@@ -271,9 +272,9 @@ namespace Unity.BossRoom.Gameplay.UserInput
 
         void OnSkill3Started(InputAction.CallbackContext context)
         {
-            if (!IsActive || m_ServerCharacter == null) return;
+            if (!IsActive || m_ServerCharacter == null || m_ServerCharacter.CharacterClass == null) return;
             
-            if (GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill3.ActionID, out var skill3))
+            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.CharacterClass.Skill3.ActionID, out var skill3))
             {
                 RequestAction(skill3.ActionID, ClientInputSender.SkillTriggerStyle.Keyboard);
             }
@@ -281,9 +282,9 @@ namespace Unity.BossRoom.Gameplay.UserInput
 
         void OnSkill3Canceled(InputAction.CallbackContext context)
         {
-            if (!IsActive || m_ServerCharacter == null) return;
+            if (!IsActive || m_ServerCharacter == null || m_ServerCharacter.CharacterClass == null) return;
             
-            if (GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill3.ActionID, out var skill3))
+            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.CharacterClass.Skill3.ActionID, out var skill3))
             {
                 RequestAction(skill3.ActionID, ClientInputSender.SkillTriggerStyle.KeyboardRelease);
             }
